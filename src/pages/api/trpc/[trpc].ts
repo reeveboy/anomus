@@ -5,18 +5,31 @@ import { z } from "zod";
 
 const prisma = new PrismaClient();
 
-export const appRouter = trpc.router().mutation("create-room", {
-  input: z.object({
-    name: z.string(),
-    description: z.string().nullish(),
-  }),
-  async resolve({ input }) {
-    const data = await prisma.room.create({
-      data: input,
-    });
-    return data.id;
-  },
-});
+export const appRouter = trpc
+  .router()
+  .query("get-room", {
+    input: z.object({
+      id: z.number(),
+    }),
+    resolve({ input }) {
+      return prisma.room.findFirst({
+        where: {
+          id: input.id,
+        },
+      });
+    },
+  })
+  .mutation("create-room", {
+    input: z.object({
+      name: z.string(),
+      description: z.string().nullish(),
+    }),
+    resolve({ input }) {
+      return prisma.room.create({
+        data: input,
+      });
+    },
+  });
 
 // export type definition of API
 export type AppRouter = typeof appRouter;

@@ -1,10 +1,16 @@
 import { AnimatePresence } from "framer-motion";
+import { useRouter } from "next/router";
 import React, { useState } from "react";
 import Modal from "../components/Modal";
 import { trpc } from "../utils/trpc";
 
 const Home: React.FC = () => {
-  const createRoom = trpc.useMutation("create-room");
+  const router = useRouter();
+  const createRoom = trpc.useMutation(["create-room"], {
+    onSuccess: (data) => {
+      router.push(`/room/${data.id}`);
+    },
+  });
 
   const [roomName, setRoomName] = useState("");
   const [roomDescription, setRoomDescription] = useState("");
@@ -57,7 +63,7 @@ const Home: React.FC = () => {
                   <label
                     className="block uppercase tracking-wide text-xs font-bold mb-1"
                     htmlFor="room-topic">
-                    Room Name
+                    Room Name *
                   </label>
                   <input
                     value={roomName}
@@ -67,6 +73,8 @@ const Home: React.FC = () => {
                     id="roomName"
                     name="roomName"
                     placeholder="Room Name"
+                    required
+                    minLength={3}
                   />
                 </div>
                 <p className="p-2"></p>
