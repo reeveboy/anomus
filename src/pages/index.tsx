@@ -6,7 +6,7 @@ import { trpc } from "../utils/trpc";
 
 const Home: React.FC = () => {
   const router = useRouter();
-  const createRoom = trpc.useMutation(["create-room"], {
+  const createRoom = trpc.useMutation(["room.create-room"], {
     onSuccess: (data) => {
       router.push(`/room/${data.id}`);
     },
@@ -93,7 +93,7 @@ const Home: React.FC = () => {
                     placeholder="Room Description"
                     cols={70}
                     rows={4}
-                    maxLength={191}
+                    maxLength={255}
                   />
                 </div>
                 <p className="p-2"></p>
