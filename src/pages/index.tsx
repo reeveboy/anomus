@@ -4,7 +4,29 @@ import Modal from "../components/Modal";
 import { trpc } from "../utils/trpc";
 
 const Home: React.FC = () => {
-  const { data } = trpc.useQuery(["hello", { text: "world" }]);
+  const createRoom = trpc.useMutation("create-room");
+
+  const [roomName, setRoomName] = useState("");
+  const [roomDescription, setRoomDescription] = useState("");
+
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    const { name, value } = e.target;
+    if (name === "roomName") {
+      setRoomName(value);
+    } else if (name === "roomDescription") {
+      setRoomDescription(value);
+    }
+  };
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    createRoom.mutate({
+      name: roomName,
+      description: roomDescription,
+    });
+  };
 
   const [show, setShow] = useState(false);
 
@@ -17,7 +39,7 @@ const Home: React.FC = () => {
       <p className="p-2"></p>
       <button
         onClick={handleOpen}
-        className="shadow border-2 border-pink-400 hover:border-pink-500 focus:shadow-outline focus:outline-none py-2 px-4 rounded">
+        className="shadow border-2 border-pink-300 hover:border-pink-500 focus:shadow-outline focus:outline-none py-2 px-4 rounded">
         Create a room
       </button>
 
@@ -30,31 +52,37 @@ const Home: React.FC = () => {
             <div className="w-[500px] bg-gray-100 text-gray-800 p-8 rounded">
               <div className="text-2xl font-bold">Lets Create Your Room!</div>
               <p className="p-2"></p>
-              <form>
+              <form onSubmit={handleSubmit}>
                 <div>
                   <label
                     className="block uppercase tracking-wide text-xs font-bold mb-1"
                     htmlFor="room-topic">
-                    Room Topic
+                    Room Name
                   </label>
                   <input
-                    className="text-gray-800 bg-gray-100 appearance-none border-2 border-gray-600 rounded w-full py-2 px-4 leading-tight focus:outline-none focus:bg-white focus:border-pink-500"
+                    value={roomName}
+                    onChange={handleChange}
+                    className="text-gray-800 bg-gray-100 appearance-none border-2 border-gray-600 rounded w-full py-2 px-4 leading-tight focus:outline-none focus:bg-white focus:border-pink-500 hover:border-pink-500 "
                     type="text"
-                    id="room-topic"
-                    placeholder="Book Title"
+                    id="roomName"
+                    name="roomName"
+                    placeholder="Room Name"
                   />
                 </div>
                 <p className="p-2"></p>
                 <div>
                   <label
                     className="block uppercase tracking-wide text-xs font-bold mb-1"
-                    htmlFor="room-topic">
+                    htmlFor="roomDescription">
                     Room Description
                   </label>
                   <textarea
-                    className="text-gray-800 bg-gray-100 appearance-none border-2 border-gray-600 rounded w-full py-2 px-4 leading-tight focus:outline-none focus:bg-white focus:border-pink-500"
-                    id="room-topic"
-                    placeholder="Book Title"
+                    value={roomDescription}
+                    onChange={handleChange}
+                    className="text-gray-800 bg-gray-100 appearance-none border-2 border-gray-600 rounded w-full py-2 px-4 leading-tight focus:outline-none focus:bg-white focus:border-pink-500 hover:border-pink-500"
+                    id="roomDescription"
+                    name="roomDescription"
+                    placeholder="Room Description"
                     cols={70}
                     rows={4}
                     maxLength={191}
