@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import Modal from "../../components/Modal";
 import { trpc } from "../../utils/trpc";
 
-const room: React.FC = () => {
+const Room: React.FC = () => {
   const router = useRouter();
   const roomId = parseInt(router.query.room_id as string);
 
@@ -98,4 +98,4 @@ const room: React.FC = () => {
   );
 };
 
-export default room;
+export default Room;
