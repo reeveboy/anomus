@@ -1,8 +1,11 @@
 import { AnimatePresence } from "framer-motion";
 import React, { useState } from "react";
 import Modal from "../components/Modal";
+import { trpc } from "../utils/trpc";
 
 const Home: React.FC = () => {
+  const { data } = trpc.useQuery(["hello", { text: "world" }]);
+
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
