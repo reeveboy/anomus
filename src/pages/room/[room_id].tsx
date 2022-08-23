@@ -1,6 +1,7 @@
 import { AnimatePresence } from "framer-motion";
 import { useRouter } from "next/router";
 import React, { useState } from "react";
+import Loading from "../../components/Loading";
 import Modal from "../../components/Modal";
 import { trpc } from "../../utils/trpc";
 
@@ -8,13 +9,12 @@ const Room: React.FC = () => {
   const router = useRouter();
   const roomId = parseInt(router.query.room_id as string);
 
-  const { data } = trpc.useQuery(["room.get-room", { id: roomId }]);
+  const getRoomQuery = trpc.useQuery(["room.get-room", { id: roomId }]);
 
-  const createMessage = trpc.useMutation(["message.create-message"]);
-  const { data: messages, refetch } = trpc.useQuery([
-    "message.get-messages",
-    { roomId },
-  ]);
+  const createMessageMutation = trpc.useMutation(["message.create-message"]);
+  const getMessagesQuery = trpc.useQuery(["message.get-messages", { roomId }]);
+  const { data: messages } = getMessagesQuery;
+  console.log(messages);
 
   const [message, setMessage] = useState("");
 
@@ -25,23 +25,25 @@ const Room: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    createMessage.mutate({
+    createMessageMutation.mutate({
       roomId,
       message,
     });
 
-    refetch();
     setMessage("");
   };
 
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
-  const handleOpen = () => setShow(true);
+  const handleOpen = () => {
+    getRoomQuery.refetch();
+    setShow(true);
+  };
 
   return (
-    <div className="w-screen h-screen flex flex-col justify-center items-center relative">
-      <div className="text-3xl ">{data?.name}</div>
+    <div className="w-full h-screen flex flex-col justify-center items-center">
+      <div className="text-3xl ">{getRoomQuery.data?.name}</div>
       <p className="p-2"></p>
       <form onSubmit={handleSubmit}>
         <textarea
@@ -94,6 +96,10 @@ const Room: React.FC = () => {
           </Modal>
         )}
       </AnimatePresence>
+
+      {getRoomQuery.isLoading && <Loading />}
+      {createMessageMutation.isLoading && <Loading />}
+      {getMessagesQuery.isLoading && <Loading />}
     </div>
   );
 };

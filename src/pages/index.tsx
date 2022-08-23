@@ -1,12 +1,13 @@
 import { AnimatePresence } from "framer-motion";
 import { useRouter } from "next/router";
 import React, { useState } from "react";
+import Loading from "../components/Loading";
 import Modal from "../components/Modal";
 import { trpc } from "../utils/trpc";
 
 const Home: React.FC = () => {
   const router = useRouter();
-  const createRoom = trpc.useMutation(["room.create-room"], {
+  const createRoomMutation = trpc.useMutation(["room.create-room"], {
     onSuccess: (data) => {
       router.push(`/room/${data.id}`);
     },
@@ -28,7 +29,7 @@ const Home: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    createRoom.mutate({
+    createRoomMutation.mutate({
       name: roomName,
       description: roomDescription,
     });
@@ -107,6 +108,8 @@ const Home: React.FC = () => {
           </Modal>
         )}
       </AnimatePresence>
+
+      {createRoomMutation.isLoading && <Loading />}
     </div>
   );
 };
