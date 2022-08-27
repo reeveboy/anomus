@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import Loading from "../components/Loading";
 import Modal from "../components/Modal";
 import { trpc } from "../utils/trpc";
+import { signIn } from "next-auth/react";
 
 const Home: React.FC = () => {
   const router = useRouter();
@@ -48,6 +49,13 @@ const Home: React.FC = () => {
         onClick={handleOpen}
         className="shadow border-2 border-pink-300 hover:border-pink-500 focus:shadow-outline focus:outline-none py-2 px-4 rounded">
         Create a room
+      </button>
+      <button
+        onClick={() => {
+          signIn();
+        }}
+        className="shadow border-2 border-pink-300 hover:border-pink-500 focus:shadow-outline focus:outline-none py-2 px-4 rounded">
+        Sign In
       </button>
 
       <AnimatePresence
