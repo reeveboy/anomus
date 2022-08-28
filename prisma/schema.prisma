@@ -1,6 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider        = "prisma-client-js"
   previewFeatures = ["referentialIntegrity"]
@@ -17,6 +14,8 @@ model Room {
   name        String
   description String?   @db.VarChar(255)
   Message     Message[]
+  userId      String
+  user        User      @relation(fields: [userId], references: [id])
 }
 
 model Message {
@@ -39,8 +38,7 @@ model Account {
   scope             String?
   id_token          String? @db.Text
   session_state     String?
-
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([provider, providerAccountId])
 }
@@ -61,6 +59,7 @@ model User {
   image         String?
   accounts      Account[]
   sessions      Session[]
+  rooms         Room[]
 }
 
 model VerificationToken {

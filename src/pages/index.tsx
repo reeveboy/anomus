@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import Loading from "../components/Loading";
 import Modal from "../components/Modal";
 import { trpc } from "../utils/trpc";
-import { signIn } from "next-auth/react";
+import { signIn, useSession } from "next-auth/react";
 
 const Home: React.FC = () => {
   const router = useRouter();
@@ -13,6 +13,8 @@ const Home: React.FC = () => {
       router.push(`/room/${data.id}`);
     },
   });
+
+  const { data: session } = useSession();
 
   const [roomName, setRoomName] = useState("");
   const [roomDescription, setRoomDescription] = useState("");
