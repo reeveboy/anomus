@@ -7,7 +7,7 @@ type Props = {
 
 const Header: React.FC<Props> = ({ session }) => {
   return (
-    <div className="h-[50px] flex justify-between items-center bg-gray-900 px-4 sticky top-0 left-0">
+    <div className="h-[60px] flex justify-between items-center bg-gray-900 px-4 sticky top-0 left-0">
       <div className="tracking-tight text-2xl font-black">Anomus</div>
       {session ? (
         <button onClick={() => signOut()}>Logout</button>

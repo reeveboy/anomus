@@ -18,6 +18,9 @@ const roomRouter = createRouter()
         where: {
           id: input.id,
         },
+        include: {
+          Message: true,
+        },
       });
     },
   })
