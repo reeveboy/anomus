@@ -1,5 +1,6 @@
 import { PrismaClient } from "@prisma/client";
 import * as trpc from "@trpc/server";
+import { TRPCError } from "@trpc/server";
 import * as trpcNext from "@trpc/server/adapters/next";
 import { z } from "zod";
 import { createRouter, createContext } from "../../../server/router/context";
@@ -25,9 +26,18 @@ const roomRouter = createRouter()
       name: z.string(),
       description: z.string().nullish(),
     }),
-    resolve({ input }) {
+    resolve({ input, ctx }) {
+      // @ts-ignore
+      if (!ctx.session?.user.id) {
+        throw new trpc.TRPCError({ code: "UNAUTHORIZED" });
+      }
       return prisma.room.create({
-        data: input,
+        data: {
+          name: input.name,
+          description: input.description,
+          // @ts-ignore
+          userId: ctx.session?.user.id,
+        },
       });
     },
   });
@@ -57,7 +67,7 @@ const messageRouter = createRouter()
     },
   });
 
-const protectedRouter = createProtectedRouter().query("getSession", {
+const sessionRouter = createRouter().query("getSession", {
   resolve({ ctx }) {
     return ctx.session;
   },
@@ -66,7 +76,7 @@ const protectedRouter = createProtectedRouter().query("getSession", {
 export const appRouter = createRouter()
   .merge("room.", roomRouter)
   .merge("message.", messageRouter)
-  .merge("auth.", protectedRouter);
+  .merge("auth.", sessionRouter);
 
 // export type definition of API
 export type AppRouter = typeof appRouter;
