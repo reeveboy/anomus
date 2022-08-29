@@ -1,9 +1,7 @@
-import { AnimatePresence } from "framer-motion";
 import { useRouter } from "next/router";
 import React, { useState } from "react";
 import Header from "../../components/Header";
 import Loading from "../../components/Loading";
-import Modal from "../../components/Modal";
 import { trpc } from "../../utils/trpc";
 import NextLink from "next/link";
 
@@ -34,11 +32,6 @@ const Room: React.FC = () => {
     setMessage("");
   };
 
-  const [show, setShow] = useState(false);
-
-  const handleClose = () => setShow(false);
-  const handleOpen = () => setShow(true);
-
   return (
     <div className="w-screen h-screen flex flex-col">
       <Header session={session} />
@@ -67,7 +60,7 @@ const Room: React.FC = () => {
             <p className="p-2"></p>
             {/* @ts-ignore */}
             {getRoomQuery.data?.userId === session?.user.id && (
-              <NextLink href={`/room/messages/${roomId}`}>
+              <NextLink href={`/view-messages/${roomId}`}>
                 <a
                   type="button"
                   className="shadow border-2  border-gray-300 hover:border-pink-500  focus:shadow-outline focus:outline-none py-2 px-4 rounded">

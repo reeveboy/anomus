@@ -11,7 +11,7 @@ const Home: React.FC = () => {
   const router = useRouter();
   const createRoomMutation = trpc.useMutation(["room.create-room"], {
     onSuccess: (data) => {
-      router.push(`/room/${data.id}`);
+      router.push(`/submit-messages/${data.id}`);
     },
   });
 
