@@ -4,14 +4,21 @@ import Header from "../../components/Header";
 import Loading from "../../components/Loading";
 import { trpc } from "../../utils/trpc";
 import NextLink from "next/link";
+import { useSession } from "next-auth/react";
 
 const Room: React.FC = () => {
   const router = useRouter();
   const roomId = parseInt(router.query.room_id as string);
 
-  const { data: session } = trpc.useQuery(["auth.getSession"]);
+  const { data: session, status } = useSession();
 
-  const getRoomQuery = trpc.useQuery(["room.get-room", { id: roomId }]);
+  const getRoomQuery = trpc.useQuery(["room.get-room", { id: roomId }], {
+    onSuccess: (data) => {
+      if (!data) {
+        router.push("/");
+      }
+    },
+  });
 
   const createMessageMutation = trpc.useMutation(["message.create-message"]);
 
@@ -73,6 +80,7 @@ const Room: React.FC = () => {
 
         {getRoomQuery.isLoading && <Loading />}
         {createMessageMutation.isLoading && <Loading />}
+        {status == "loading" && <Loading />}
       </div>
     </div>
   );

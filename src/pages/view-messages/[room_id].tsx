@@ -1,6 +1,6 @@
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
-import React from "react";
+import React, { useEffect } from "react";
 import Header from "../../components/Header";
 import Loading from "../../components/Loading";
 import { trpc } from "../../utils/trpc";
@@ -9,10 +9,14 @@ const DisccusionRoom: React.FC = () => {
   const router = useRouter();
   const roomId = parseInt(router.query.room_id as string);
 
-  const { data: room, isLoading: rl } = trpc.useQuery([
-    "room.get-room",
-    { id: roomId },
-  ]);
+  const getRoomQuery = trpc.useQuery(["room.get-room", { id: roomId }], {
+    onSuccess: (data) => {
+      if (!data) {
+        router.push("/");
+      }
+    },
+  });
+  const { data: room } = getRoomQuery;
 
   const { data: session, status } = useSession({
     required: true,
@@ -21,17 +25,12 @@ const DisccusionRoom: React.FC = () => {
     },
   });
 
-  if (status === "loading" || rl) {
-    return <Loading />;
-  }
-
-  if (
-    !room ||
+  useEffect(() => {
     // @ts-ignore
-    (room.userId !== session.user.id && status === "authenticated")
-  ) {
-    router.push("/");
-  }
+    if (room?.userId != session?.user.id) {
+      router.push("/");
+    }
+  }, []);
 
   return (
     <div className="w-screen h-screen flex flex-col">
@@ -49,6 +48,9 @@ const DisccusionRoom: React.FC = () => {
         </div>
       </div>
       <p className="p-4" />
+
+      {getRoomQuery.isLoading && <Loading />}
+      {status === "loading" && <Loading />}
     </div>
   );
 };

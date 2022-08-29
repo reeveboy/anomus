@@ -5,7 +5,7 @@ import Loading from "../components/Loading";
 import Modal from "../components/Modal";
 import { trpc } from "../utils/trpc";
 import Header from "../components/Header";
-import { signIn } from "next-auth/react";
+import { signIn, useSession } from "next-auth/react";
 
 const Home: React.FC = () => {
   const router = useRouter();
@@ -15,7 +15,7 @@ const Home: React.FC = () => {
     },
   });
 
-  const { data: session } = trpc.useQuery(["auth.getSession"]);
+  const { data: session } = useSession();
 
   const [roomName, setRoomName] = useState("");
   const [roomDescription, setRoomDescription] = useState("");
