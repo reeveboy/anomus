@@ -32,6 +32,25 @@ const roomRouter = createRouter()
         data: input,
       });
     },
+  })
+  .query("get-user-rooms", {
+    input: z.object({
+      ownerId: z.string(),
+    }),
+    resolve({ input }) {
+      return prisma.room.findMany({
+        where: input,
+        select: {
+          id: true,
+          name: true,
+          description: true,
+          ownerId: true,
+          _count: {
+            select: { Message: true },
+          },
+        },
+      });
+    },
   });
 
 const messageRouter = createRouter()

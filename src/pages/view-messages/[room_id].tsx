@@ -25,7 +25,11 @@ const DisccusionRoom: React.FC = () => {
     },
   });
 
-  if (room?.ownerId !== session?.user?.id && status === "authenticated") {
+  if (
+    (room?.ownerId as string) != (session?.user?.id as string) &&
+    status === "authenticated" &&
+    !getRoomQuery.isLoading
+  ) {
     router.replace("/");
   }
 

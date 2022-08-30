@@ -13,7 +13,12 @@ const Header: React.FC<Props> = ({ session }) => {
         <a className="tracking-tight text-2xl font-black">Anomus</a>
       </NextLink>
       {session ? (
-        <button onClick={() => signOut()}>Logout</button>
+        <>
+          <NextLink href={"/your-rooms"}>
+            <a>Your rooms</a>
+          </NextLink>
+          <button onClick={() => signOut()}>Logout</button>
+        </>
       ) : (
         <button onClick={() => signIn()}>Sign In</button>
       )}
