@@ -26,7 +26,7 @@ const DisccusionRoom: React.FC = () => {
   });
 
   if (
-    (room?.ownerId as string) != (session?.user?.id as string) &&
+    room?.ownerId != session?.user?.id &&
     status === "authenticated" &&
     !getRoomQuery.isLoading
   ) {
@@ -37,15 +37,22 @@ const DisccusionRoom: React.FC = () => {
     <div className="w-full h-screen flex flex-col">
       <Header session={session} />
       <p className="p-4" />
-      <div className="flex w-full h-full justify-center items-center rounded">
-        <div className="w-[800px] p-8 rounded">
+      <div className="flex flex-col w-3/4 mx-auto">
+        <div className="text-3xl">{room?.name} - Discussion</div>
+        <p className="p-2"></p>
+        <div className="w-full rounded">
           {room?.Message?.map((msg, index) => (
             <div
               key={index}
-              className="text-lg border-2 border-gray-400 hover:border-pink-500 mb-2 py-2 px-4 rounded">
+              className="text-lg border-2 border-gray-400 hover:border-pink-500 mb-4 py-2 px-4 rounded">
               {msg.message}
             </div>
           ))}
+          {room?.Message?.length == 0 ? (
+            <div className="text-center">No messages yet!</div>
+          ) : (
+            ""
+          )}
         </div>
       </div>
       <p className="p-4" />

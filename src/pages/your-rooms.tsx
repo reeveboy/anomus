@@ -4,6 +4,7 @@ import React from "react";
 import Header from "../components/Header";
 import { trpc } from "../utils/trpc";
 import NextLink from "next/link";
+import Loading from "../components/Loading";
 
 const YourRooms: React.FC = () => {
   const router = useRouter();
@@ -19,6 +20,7 @@ const YourRooms: React.FC = () => {
     "room.get-user-rooms",
     { ownerId: session?.user?.id! },
   ]);
+  const { data: rooms } = getUserRooms;
 
   return (
     <div className="w-full h-screen flex flex-col">
@@ -28,22 +30,33 @@ const YourRooms: React.FC = () => {
         <div className="text-3xl">Your Rooms</div>
         <p className="p-2"></p>
         <div className="w-full">
-          {getUserRooms.data?.map((room, idx) => (
+          {rooms?.map((room, idx) => (
             <div
               key={idx}
-              className="w-full flex justify-between border-2 border-gray-400 hover:border-pink-500 py-2 px-4 rounded mb-4">
+              className="w-full flex justify-between border-2 border-gray-400 hover:border-pink-500 py-2 px-4 rounded mb-4 text-lg">
               <div>{room.name}</div>
               <div className="flex">
                 <div>{room._count.Message}</div>
                 <p className="px-8"></p>
+                <NextLink href={`/submit-messages/${room.id}`}>
+                  <a>Submit!</a>
+                </NextLink>
+                <p className="px-4"></p>
                 <NextLink href={`/view-messages/${room.id}`}>
-                  <a>Go!</a>
+                  <a>View!</a>
                 </NextLink>
               </div>
             </div>
           ))}
+          {rooms?.length == 0 ? (
+            <div className="text-center">No rooms yet!</div>
+          ) : (
+            ""
+          )}
         </div>
       </div>
+
+      {getUserRooms.isLoading && <Loading />}
     </div>
   );
 };

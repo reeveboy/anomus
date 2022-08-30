@@ -15,12 +15,16 @@ const Header: React.FC<Props> = ({ session }) => {
       {session ? (
         <>
           <NextLink href={"/your-rooms"}>
-            <a>Your rooms</a>
+            <a className="text-lg">Your rooms</a>
           </NextLink>
-          <button onClick={() => signOut()}>Logout</button>
+          <button className="text-lg" onClick={() => signOut()}>
+            Logout
+          </button>
         </>
       ) : (
-        <button onClick={() => signIn()}>Sign In</button>
+        <button className="text-lg" onClick={() => signIn()}>
+          Sign In
+        </button>
       )}
     </div>
   );
