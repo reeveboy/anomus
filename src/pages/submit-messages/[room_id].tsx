@@ -8,14 +8,14 @@ import { useSession } from "next-auth/react";
 
 const Room: React.FC = () => {
   const router = useRouter();
-  const roomId = parseInt(router.query.room_id as string);
+  const roomId = router.query.room_id as string;
 
   const { data: session, status } = useSession();
 
   const getRoomQuery = trpc.useQuery(["room.get-room", { id: roomId }], {
     onSuccess: (data) => {
       if (!data) {
-        router.push("/");
+        router.replace("/");
       }
     },
   });
@@ -40,7 +40,7 @@ const Room: React.FC = () => {
   };
 
   return (
-    <div className="w-screen h-screen flex flex-col">
+    <div className="w-full h-screen flex flex-col">
       <Header session={session} />
       <div className="w-full h-screen flex flex-col justify-center items-center">
         <div className="text-3xl ">{getRoomQuery.data?.name}</div>
@@ -66,7 +66,7 @@ const Room: React.FC = () => {
             </button>
             <p className="p-2"></p>
             {/* @ts-ignore */}
-            {getRoomQuery.data?.userId === session?.user.id && (
+            {getRoomQuery.data?.ownerId === session?.user.id && (
               <NextLink href={`/view-messages/${roomId}`}>
                 <a
                   type="button"

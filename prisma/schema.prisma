@@ -10,18 +10,18 @@ datasource db {
 }
 
 model Room {
-  id          Int       @id @default(autoincrement())
+  id          String    @id @default(cuid())
   name        String
   description String?   @db.VarChar(255)
   Message     Message[]
-  userId      String
-  user        User      @relation(fields: [userId], references: [id])
+  ownerId     String
+  user        User      @relation(fields: [ownerId], references: [id])
 }
 
 model Message {
-  id      Int    @id @default(autoincrement())
+  id      String @id @default(cuid())
   message String @db.VarChar(255)
-  roomId  Int
+  roomId  String
   Room    Room   @relation(fields: [roomId], references: [id])
 }
 

@@ -7,12 +7,12 @@ import { trpc } from "../../utils/trpc";
 
 const DisccusionRoom: React.FC = () => {
   const router = useRouter();
-  const roomId = parseInt(router.query.room_id as string);
+  const roomId = router.query.room_id as string;
 
   const getRoomQuery = trpc.useQuery(["room.get-room", { id: roomId }], {
     onSuccess: (data) => {
       if (!data) {
-        router.push("/");
+        router.replace("/");
       }
     },
   });
@@ -21,22 +21,20 @@ const DisccusionRoom: React.FC = () => {
   const { data: session, status } = useSession({
     required: true,
     onUnauthenticated: () => {
-      router.push("/");
+      router.replace("/");
     },
   });
 
-  useEffect(() => {
-    // @ts-ignore
-    if (room?.userId != session?.user.id) {
-      router.push("/");
-    }
-  }, []);
+  // @ts-ignore
+  if (room?.ownerId != session?.user.id && status === "authenticated") {
+    router.replace("/");
+  }
 
   return (
-    <div className="w-screen h-screen flex flex-col">
+    <div className="w-full h-screen flex flex-col">
       <Header session={session} />
       <p className="p-4" />
-      <div className="flex w-full h-full justify-center items-center rounded overflow-y-auto">
+      <div className="flex w-full h-full justify-center items-center rounded">
         <div className="w-[800px] p-8 rounded">
           {room?.Message?.map((msg, index) => (
             <div

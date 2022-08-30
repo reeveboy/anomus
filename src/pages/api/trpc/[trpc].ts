@@ -1,17 +1,14 @@
 import { PrismaClient } from "@prisma/client";
-import * as trpc from "@trpc/server";
-import { TRPCError } from "@trpc/server";
 import * as trpcNext from "@trpc/server/adapters/next";
 import { z } from "zod";
 import { createRouter, createContext } from "../../../server/router/context";
-import { createProtectedRouter } from "../../../server/router/protected-router";
 
 const prisma = new PrismaClient();
 
 const roomRouter = createRouter()
   .query("get-room", {
     input: z.object({
-      id: z.number(),
+      id: z.string(),
     }),
     resolve({ input }) {
       return prisma.room.findFirst({
@@ -28,19 +25,11 @@ const roomRouter = createRouter()
     input: z.object({
       name: z.string(),
       description: z.string().nullish(),
+      ownerId: z.string(),
     }),
-    resolve({ input, ctx }) {
-      // @ts-ignore
-      if (!ctx.session?.user.id) {
-        throw new trpc.TRPCError({ code: "UNAUTHORIZED" });
-      }
+    resolve({ input }) {
       return prisma.room.create({
-        data: {
-          name: input.name,
-          description: input.description,
-          // @ts-ignore
-          userId: ctx.session?.user.id,
-        },
+        data: input,
       });
     },
   });
@@ -49,7 +38,7 @@ const messageRouter = createRouter()
   .mutation("create-message", {
     input: z.object({
       message: z.string(),
-      roomId: z.number(),
+      roomId: z.string(),
     }),
     resolve({ input }) {
       return prisma.message.create({
@@ -59,7 +48,7 @@ const messageRouter = createRouter()
   })
   .query("get-messages", {
     input: z.object({
-      roomId: z.number(),
+      roomId: z.string(),
     }),
     resolve({ input }) {
       return prisma.message.findMany({

@@ -8,7 +8,7 @@ type Props = {
 
 const Header: React.FC<Props> = ({ session }) => {
   return (
-    <div className="h-[60px] flex justify-between items-center bg-gray-900 px-4 sticky top-0 left-0">
+    <div className="min-h-[60px] flex justify-between items-center bg-gray-900 px-4 sticky top-0 left-0">
       <NextLink href={"/"}>
         <a className="tracking-tight text-2xl font-black">Anomus</a>
       </NextLink>
