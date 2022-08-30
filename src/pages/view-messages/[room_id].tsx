@@ -1,6 +1,6 @@
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
-import React, { useEffect } from "react";
+import React from "react";
 import Header from "../../components/Header";
 import Loading from "../../components/Loading";
 import { trpc } from "../../utils/trpc";
@@ -25,8 +25,7 @@ const DisccusionRoom: React.FC = () => {
     },
   });
 
-  // @ts-ignore
-  if (room?.ownerId != session?.user.id && status === "authenticated") {
+  if (room?.ownerId !== session?.user?.id && status === "authenticated") {
     router.replace("/");
   }
 

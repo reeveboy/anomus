@@ -65,8 +65,7 @@ const Room: React.FC = () => {
               Submit your message
             </button>
             <p className="p-2"></p>
-            {/* @ts-ignore */}
-            {getRoomQuery.data?.ownerId === session?.user.id && (
+            {getRoomQuery.data?.ownerId === session?.user?.id && (
               <NextLink href={`/view-messages/${roomId}`}>
                 <a
                   type="button"
