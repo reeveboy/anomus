@@ -9,13 +9,16 @@ const DisccusionRoom: React.FC = () => {
   const router = useRouter();
   const roomId = router.query.room_id as string;
 
-  const getRoomQuery = trpc.useQuery(["room.get-room", { id: roomId }], {
-    onSuccess: (data) => {
-      if (!data) {
-        router.replace("/");
-      }
-    },
-  });
+  const getRoomQuery = trpc.useQuery(
+    ["room.get-owner-room-messages", { roomId }],
+    {
+      onSuccess: (data) => {
+        if (!data) {
+          router.replace("/");
+        }
+      },
+    }
+  );
   const { data: room } = getRoomQuery;
 
   const { data: session, status } = useSession({
@@ -24,14 +27,6 @@ const DisccusionRoom: React.FC = () => {
       router.replace("/");
     },
   });
-
-  if (
-    room?.ownerId != session?.user?.id &&
-    status === "authenticated" &&
-    !getRoomQuery.isLoading
-  ) {
-    router.replace("/");
-  }
 
   return (
     <div className="w-full h-screen flex flex-col">

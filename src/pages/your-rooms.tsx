@@ -16,10 +16,7 @@ const YourRooms: React.FC = () => {
     },
   });
 
-  const getUserRooms = trpc.useQuery([
-    "room.get-user-rooms",
-    { ownerId: session?.user?.id! },
-  ]);
+  const getUserRooms = trpc.useQuery(["room.get-user-rooms"]);
   const { data: rooms } = getUserRooms;
 
   return (

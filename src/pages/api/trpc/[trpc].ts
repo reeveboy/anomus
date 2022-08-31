@@ -34,12 +34,11 @@ const roomRouter = createRouter()
     },
   })
   .query("get-user-rooms", {
-    input: z.object({
-      ownerId: z.string(),
-    }),
-    resolve({ input }) {
+    resolve({ ctx }) {
       return prisma.room.findMany({
-        where: input,
+        where: {
+          ownerId: ctx.session?.user?.id,
+        },
         select: {
           id: true,
           name: true,
@@ -48,6 +47,28 @@ const roomRouter = createRouter()
           _count: {
             select: { Message: true },
           },
+        },
+      });
+    },
+  })
+  .query("get-owner-room-messages", {
+    input: z.object({
+      roomId: z.string(),
+    }),
+    resolve({ input, ctx }) {
+      return prisma.room.findFirst({
+        where: {
+          id: input.roomId,
+          AND: [
+            {
+              ownerId: {
+                equals: ctx.session?.user?.id,
+              },
+            },
+          ],
+        },
+        include: {
+          Message: true,
         },
       });
     },
