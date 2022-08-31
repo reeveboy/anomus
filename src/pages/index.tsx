@@ -36,8 +36,7 @@ const Home: React.FC = () => {
     createRoomMutation.mutate({
       name: roomName,
       description: roomDescription,
-      // @ts-ignore
-      ownerId: session?.user.id,
+      ownerId: session?.user?.id!,
     });
   };
 
@@ -46,7 +45,7 @@ const Home: React.FC = () => {
   const handleClose = () => setShow(false);
   const handleOpen = () => {
     if (!session) {
-      signIn();
+      return signIn();
     }
     setShow(true);
   };
