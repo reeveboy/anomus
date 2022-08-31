@@ -1,20 +1,14 @@
-export function getBaseUrl(roomId: string): string {
-  let baseUrl = "";
-
+export function getBaseUrl() {
   // reference for vercel.com
   if (process.env.VERCEL_URL) {
-    baseUrl = `https://${process.env.VERCEL_URL}`;
+    return `https://${process.env.VERCEL_URL}`;
   }
 
   // reference for render.com
-  else if (process.env.RENDER_INTERNAL_HOSTNAME) {
-    baseUrl = `http://${process.env.RENDER_INTERNAL_HOSTNAME}:${process.env.PORT}`;
+  if (process.env.RENDER_INTERNAL_HOSTNAME) {
+    return `http://${process.env.RENDER_INTERNAL_HOSTNAME}:${process.env.PORT}`;
   }
 
   // assume localhost
-  else {
-    baseUrl = `http://localhost:${process.env.PORT ?? 3000}`;
-  }
-
-  return `${baseUrl}/submit-messages/${roomId}`;
+  return `http://localhost:${process.env.PORT ?? 3000}`;
 }
