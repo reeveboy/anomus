@@ -14,6 +14,7 @@ export default function Document() {
           href="https://fonts.googleapis.com/css2?family=Barlow&display=swap"
           rel="stylesheet"
         />
+        <link rel="icon" href="/owl.png" />
       </Head>
       <body>
         <Main />
