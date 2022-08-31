@@ -15,7 +15,12 @@ const Home: React.FC = () => {
     },
   });
 
-  const { data: session } = useSession();
+  const { data: session } = useSession({
+    required: true,
+    onUnauthenticated() {
+      router.replace("/");
+    },
+  });
 
   const [roomName, setRoomName] = useState("");
   const [roomDescription, setRoomDescription] = useState("");
@@ -36,8 +41,7 @@ const Home: React.FC = () => {
     createRoomMutation.mutate({
       name: roomName,
       description: roomDescription,
-      // @ts-ignore
-      ownerId: session?.user.id,
+      ownerId: session?.user?.id!,
     });
   };
 
