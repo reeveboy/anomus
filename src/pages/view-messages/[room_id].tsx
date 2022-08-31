@@ -37,11 +37,7 @@ const DisccusionRoom: React.FC = () => {
   const handleClose = () => setShow(false);
   const handleOpen = () => setShow(true);
 
-  const baseURL = getBaseUrl();
-
-  const qrCodeURL = `${baseURL}/submit-messages/${roomId}`;
-
-  console.log(qrCodeURL);
+  const qrCodeURL = getBaseUrl(roomId);
 
   return (
     <div className="w-full h-screen flex flex-col">

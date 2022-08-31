@@ -5,6 +5,17 @@ import Loading from "../../components/Loading";
 import { trpc } from "../../utils/trpc";
 import NextLink from "next/link";
 import { useSession } from "next-auth/react";
+import {
+  WhatsappShareButton,
+  WhatsappIcon,
+  TelegramShareButton,
+  TelegramIcon,
+  TwitterShareButton,
+  TwitterIcon,
+  FacebookShareButton,
+  FacebookIcon,
+} from "react-share";
+import { getBaseUrl } from "../../utils/getBaseUrl";
 
 const Room: React.FC = () => {
   const router = useRouter();
@@ -38,6 +49,8 @@ const Room: React.FC = () => {
 
     setMessage("");
   };
+
+  const shareUrl = getBaseUrl(roomId);
 
   return (
     <div className="w-full h-screen flex flex-col">
@@ -76,6 +89,20 @@ const Room: React.FC = () => {
             )}
           </div>
         </form>
+        <div className="flex justify-center mt-4">
+          <WhatsappShareButton className="mx-1" url={shareUrl}>
+            <WhatsappIcon size={32} round />
+          </WhatsappShareButton>
+          <TelegramShareButton className="mx-1" url={shareUrl}>
+            <TelegramIcon size={32} round />
+          </TelegramShareButton>
+          <TwitterShareButton className="mx-1" url={shareUrl}>
+            <TwitterIcon size={32} round />
+          </TwitterShareButton>
+          <FacebookShareButton className="mx-1" url={shareUrl}>
+            <FacebookIcon size={32} round />
+          </FacebookShareButton>
+        </div>
 
         {getRoomQuery.isLoading && <Loading />}
         {createMessageMutation.isLoading && <Loading />}
