@@ -6,7 +6,7 @@ import QRCode from "react-qr-code";
 import Header from "../../components/Header";
 import Loading from "../../components/Loading";
 import Modal from "../../components/Modal";
-import { getBaseUrl } from "../../utils/getBaseUrl";
+import { getShareLink } from "../../utils/getShareLink";
 import { trpc } from "../../utils/trpc";
 
 const DisccusionRoom: React.FC = () => {
@@ -37,7 +37,7 @@ const DisccusionRoom: React.FC = () => {
   const handleClose = () => setShow(false);
   const handleOpen = () => setShow(true);
 
-  const qrCodeURL = getBaseUrl(roomId);
+  const qrCodeURL = getShareLink(roomId);
 
   return (
     <div className="w-full h-screen flex flex-col">

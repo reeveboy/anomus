@@ -15,7 +15,7 @@ import {
   FacebookShareButton,
   FacebookIcon,
 } from "react-share";
-import { getBaseUrl } from "../../utils/getBaseUrl";
+import { getShareLink } from "../../utils/getShareLink";
 
 const Room: React.FC = () => {
   const router = useRouter();
@@ -50,7 +50,7 @@ const Room: React.FC = () => {
     setMessage("");
   };
 
-  const shareUrl = getBaseUrl(roomId);
+  const shareUrl = getShareLink(roomId);
 
   return (
     <div className="w-full h-screen flex flex-col">
