@@ -44,11 +44,11 @@ const DisccusionRoom: React.FC = () => {
       <Header session={session} />
       <p className="p-4" />
       <div className="flex flex-col w-3/4 mx-auto">
-        <div className="flex justify-between">
-          <div className="text-3xl">{room?.name} - Discussion</div>
+        <div className="flex justify-between items-baseline">
+          <div className="text-3xl">{room?.name}</div>
           <button
             onClick={handleOpen}
-            className="shadow border-2 border-pink-300 hover:border-pink-500 focus:shadow-outline focus:outline-none py-2 px-4 rounded">
+            className="bg-gray-900 shadow border-2 border-pink-300 hover:border-pink-500 focus:shadow-outline focus:outline-none py-2 px-4 rounded">
             See QR
           </button>
         </div>
@@ -57,7 +57,7 @@ const DisccusionRoom: React.FC = () => {
           {room?.Message?.map((msg, index) => (
             <div
               key={index}
-              className="text-lg border-2 border-gray-400 hover:border-pink-500 mb-4 py-2 px-4 rounded">
+              className="bg-gray-900 text-lg border-2 border-gray-400 hover:border-pink-500 mb-4 py-2 px-4 rounded">
               {msg.message}
             </div>
           ))}

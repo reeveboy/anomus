@@ -54,7 +54,9 @@ const Home: React.FC = () => {
     <div className="w-full h-screen flex flex-col">
       <Header session={session} />
       <div className="w-screen h-full flex flex-col justify-center items-center">
-        <div className="text-3xl ">Want to have an Annoymous Disccusion?</div>
+        <div className="text-xl md:text-3xl ">
+          Have an Annoymous Disccusion Room?
+        </div>
         <p className="p-2"></p>
         <button
           onClick={handleOpen}
@@ -68,7 +70,7 @@ const Home: React.FC = () => {
           exitBeforeEnter={true}>
           {show && (
             <Modal handleClose={handleClose}>
-              <div className="w-[500px] bg-gray-100 text-gray-800 p-8 rounded">
+              <div className="mx-auto w-4/5 bg-gray-100 text-gray-800 p-8 rounded">
                 <div className="text-2xl font-bold">Lets Create Your Room!</div>
                 <p className="p-2"></p>
                 <form onSubmit={handleSubmit}>
@@ -81,13 +83,14 @@ const Home: React.FC = () => {
                     <input
                       value={roomName}
                       onChange={handleChange}
-                      className="text-gray-800 bg-gray-100 appearance-none border-2 border-gray-600 rounded w-full py-2 px-4 leading-tight focus:outline-none focus:bg-white focus:border-pink-500 hover:border-pink-500 "
+                      className="text-gray-800 bg-gray-200 appearance-none border-2 border-gray-600 rounded w-full py-2 px-4 leading-tight focus:outline-none focus:bg-white focus:border-pink-500 hover:border-pink-500 "
                       type="text"
                       id="roomName"
                       name="roomName"
                       placeholder="Room Name"
                       required
                       minLength={3}
+                      autoComplete="off"
                     />
                   </div>
                   <p className="p-2"></p>
@@ -100,7 +103,7 @@ const Home: React.FC = () => {
                     <textarea
                       value={roomDescription}
                       onChange={handleChange}
-                      className="text-gray-800 bg-gray-100 appearance-none border-2 border-gray-600 rounded w-full py-2 px-4 leading-tight focus:outline-none focus:bg-white focus:border-pink-500 hover:border-pink-500"
+                      className="text-gray-800 bg-gray-200 appearance-none border-2 border-gray-600 rounded w-full py-2 px-4 leading-tight focus:outline-none focus:bg-white focus:border-pink-500 hover:border-pink-500"
                       id="roomDescription"
                       name="roomDescription"
                       placeholder="Room Description"
@@ -111,7 +114,7 @@ const Home: React.FC = () => {
                   </div>
                   <p className="p-2"></p>
                   <div className="flex justify-center">
-                    <button className="border-2 border-gray-800 hover:border-pink-500 focus:shadow-outline py-2 px-4 rounded">
+                    <button className="bg-gray-200 border-2 border-gray-800 hover:border-pink-500 focus:shadow-outline py-2 px-4 rounded">
                       Lets go!
                     </button>
                   </div>

@@ -23,22 +23,22 @@ const YourRooms: React.FC = () => {
     <div className="w-full h-screen flex flex-col">
       <Header session={session} />
       <p className="p-4"></p>
-      <div className="flex flex-col w-3/4 mx-auto">
+      <div className="flex flex-col w-4/5 md:w-3/4 mx-auto">
         <div className="text-3xl">Your Rooms</div>
         <p className="p-2"></p>
         <div className="w-full">
           {rooms?.map((room, idx) => (
             <div
               key={idx}
-              className="w-full flex justify-between border-2 border-gray-400 hover:border-pink-500 py-2 px-4 rounded mb-4 text-lg">
-              <div>{room.name}</div>
-              <div className="flex">
+              className="bg-gray-900 w-full flex flex-col justify-between border-2 border-gray-400 hover:border-pink-500 py-2 px-4 rounded mb-8 md:mb-4 text-lg">
+              <div className="text-xl">{room.name}</div>
+              <div className="text-gray-300 mt-2 w-full flex justify-between">
                 <div>{room._count.Message}</div>
-                <p className="px-8"></p>
+                <p className=""></p>
                 <NextLink href={`/submit-messages/${room.id}`}>
                   <a>Submit!</a>
                 </NextLink>
-                <p className="px-4"></p>
+                <p className=""></p>
                 <NextLink href={`/view-messages/${room.id}`}>
                   <a>View!</a>
                 </NextLink>

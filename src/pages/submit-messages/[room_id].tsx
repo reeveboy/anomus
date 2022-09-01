@@ -58,15 +58,14 @@ const Room: React.FC = () => {
       <div className="w-full h-screen flex flex-col justify-center items-center">
         <div className="text-3xl ">{getRoomQuery.data?.name}</div>
         <p className="p-2"></p>
-        <form onSubmit={handleSubmit}>
+        <form className="w-4/5 md:w-1/2" onSubmit={handleSubmit}>
           <textarea
             onChange={handleChange}
             value={message}
-            className="text-lg text-gray-300 bg-gray-700 border-2 border-gray-300 hover:border-pink-500 rounded focus:outline-none focus:border-pink-500  p-2"
+            className="w-full text-lg text-gray-300 bg-gray-900 border-2 border-gray-300 hover:border-pink-500 rounded focus:outline-none focus:border-pink-500  p-2"
             name="message"
             id="message"
-            cols={70}
-            rows={4}
+            rows={3}
             maxLength={255}
             wrap="hard"
             placeholder="Type your message here"></textarea>
@@ -74,7 +73,7 @@ const Room: React.FC = () => {
           <div className="flex justify-center">
             <button
               type="submit"
-              className="shadow border-2  border-gray-300 hover:border-pink-500  focus:shadow-outline focus:outline-none py-2 px-4 rounded">
+              className="shadow border-2 bg-gray-900 border-gray-300 hover:border-pink-500  focus:shadow-outline focus:outline-none py-2 px-4 rounded">
               Submit your message
             </button>
             <p className="p-2"></p>
