@@ -1,34 +1,32 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+This is a [T3 Stack](https://create.t3.gg/) project bootstrapped with `create-t3-app`.
 
-## Getting Started
+# Anomus
+Anomus - The place to share anonymous messages about any topic
 
-First, run the development server:
+![image](https://user-images.githubusercontent.com/81756283/235133137-ceef3b57-134b-4685-8a92-b7a3f0527ea3.png)
 
-```bash
-npm run dev
-# or
-yarn dev
-```
+The different technologies used in this project
+- [Next.js](https://nextjs.org)
+- [NextAuth.js](https://next-auth.js.org)
+- [Prisma](https://prisma.io)
+- [Tailwind CSS](https://tailwindcss.com)
+- [tRPC](https://trpc.io)
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Features
+- Github OAuth
+- Create Discussion Rooms
+- Shareable room links and QR Code
+- Discuss annonymously
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+## Screenshots
+- Your Rooms Page
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+![image](https://user-images.githubusercontent.com/81756283/235133702-66c4580d-0371-48bf-bc2b-4f9f5fec7267.png)
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+- Room messages
 
-## Learn More
+![image](https://user-images.githubusercontent.com/81756283/235133526-e8f1ba31-5755-485b-9158-f94ab43ba490.png)
 
-To learn more about Next.js, take a look at the following resources:
+- Submitting a message
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+![image](https://user-images.githubusercontent.com/81756283/235133890-847efe92-fa83-4566-9be5-2198b55340a6.png)
